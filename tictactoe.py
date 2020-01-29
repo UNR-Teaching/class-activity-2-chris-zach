@@ -1,50 +1,69 @@
-""" Note: Although the skeleton below is in Python, you may use any programming language you want so long as the language supports object-oriented programming, 
-          and you make use of relevant object-oriented design principles.
-"""
-~~~~~~~~~~~~
+import unittest
 
 class Board(object):
-
     def __init__(self):
-        """
-        Initializes the Board of size 3x3
-        """
+        self.board = [['-', '-', '-'], ['-', '-', '-'], ['-', '-', '-']]
 
-        pass
+    pass
 
     def mark_square(self, column, row, player):
-        """
-        Marks a square at coordinate (column, row) for player
+        if player == 'x':
+            mark = 'x'
+        else:
+            mark = 'o'
+        if self.board[int(row)][int(column)] == '-':
+            self.board[int(row)][int(column)] = mark
+            return True
+        else:
+            print("invalid location")
+            return False
 
-        :param column: (int) the 0-indexed column of the Board to mark
-        :param row: (int) the 0-indexed row of the Board to mark
-        :param player: (str) the X or O representation of which player to mark in square
+    pass
 
-        :return: ????
-        """
-
-        pass
 
     def has_winner(self):
-        """
-        Checks to see if there is a current winner of the game
-
-        :return: ????
-        """
-
-        pass
+        return (self.board[0][0] == self.board[0][1] == self.board[0][2] != '-') or (self.board[1][0] == self.board[1][1] == self.board[1][2] != '-') or (self.board[2][0] == self.board[2][1] == self.board[2][2] != '-') or (self.board[0][0] == self.board[1][0] == self.board[2][0] != '-') or (self.board[0][1] == self.board[1][1] == self.board[2][1] != '-') or (self.board[0][2] == self.board[1][2] == self.board[2][2] != '-') or (self.board[0][0] == self.board[1][1] == self.board[2][2] != '-') or (self.board[2][0] == self.board[1][1] == self.board[0][2] != '-')
 
     def play_game(self):
-        """
-        Takes moves from raw_input as comma-separated list in form (column, row, player)
-            and makes a move. When a winner has been determined, the game ends
-        
-        :return: (str) the letter representing the player who won
-        """
-        
-        pass
-        
+        while not self.has_winner():
+            val=input("Enter move in form: Column, Row, Symbol\n")
+            val = val.split(', ')
+            if self.validate_input(val):
+                print("success")
+                self.mark_square(val[0], val[1], val[2])
+                self.printBoard()
+            else:
+                print("try again")
+
+
+        return 0
+
+    def validate_input(self, vals):
+        if len(vals) == 3:
+            for i in range(len(vals)):
+                if len(vals[i]) != 1:
+                    return False
+                else:
+                    continue
+            return True
+        else:
+            return False
+
+    def printBoard(self):
+        print(self.board[0])
+        print(self.board[1])
+        print(self.board[2])
+
+class TestBoard(unittest.TestCase):
+
+    def __init__(self):
+        self.board = Board()
+
+    def test_initialization(self):
+        self.assertEqual(self.board.board[0], ['-', '-', '-'])
+
 if __name__ == '__main__':
     board = Board()
+    unittest.main()
     winner = board.play_game()
     print("{} has won!".format(winner))

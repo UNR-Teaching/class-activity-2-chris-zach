@@ -1,4 +1,4 @@
-# Class Activity 1 part two
+# Class Activity 1 part two - by Zachary Black & Christopher Eichstedt
 
 Tic-Tac-Toe Exercise
 
